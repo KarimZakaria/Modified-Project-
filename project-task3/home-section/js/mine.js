@@ -4,11 +4,19 @@ $(".sideNav i").click(function(){
     $(".addNote, .delNote ").toggle();
 })
 
-/////////////////////////////////////////////////////////////
+/////////////////// hiding navbar //////////////////////////////////////////
    
-var wScrol = $(window).scrollTop();
 $(window).scroll(function(){
-console.log(wScrol)
+    var wScrol = $(window).scrollTop();
+
+if(wScrol>60)
+    {
+        $(".navy").fadeOut(200)
+    }
+    else
+        {
+             $(".navy").fadeIn(200)
+        }
 })
 
 /////////////////////////////////////////////////////////////
@@ -135,30 +143,45 @@ $(".cont" ).on("click", function() {
 */
 
 
-let x = ` <div class="note">
+let x = ` <div class="note py-2 pl-2">
  <textarea ></textarea><span class=" myDel"><i class="far fa-times-circle"></i></span></div>`;
-    
+   
+var notes = document.getElementsByClassName("note")
     
 $(".addNote i").click(function () { 
     $('#myNote').append(x);
-    $( ".note" ).draggable();
+    $( ".note " ).draggable();
     
     $(".addNote i").each(function(){
     $(".myDel i").click(function(){
             $(this).parentsUntil($("#myNote")).remove();
          });
     });
-});
+    
+  ///// making the active note on the top
+    
+var notes = document.getElementsByClassName("note");
+    for(var i=0 ; i<notes.length ; i++)
+        {
+          notes[i].addEventListener("mousedown",function()
+                                    {
+          var current = document.getElementsByClassName("active");
+                                   
+               if(current.length >0)
+                   {
+   current[0].className = current[0].className.replace(" active", "");
+
+                   }
+          this.className += " active";
+                                    }) 
+            
+        }
+    
+    
+  
+}); 
 
 
-/* for making the active note on the top (didn't work)
-
-$(".note").click(function() {
-        $(".note").removeClass("index");
-        $(this).addClass("index");
-});
-
-*/
 
 $(".bgCol ul li").click(function(){
     let bg = $(this).css("backgroundColor")
